@@ -119,7 +119,7 @@
                         <div class="bg-gray-100 rounded-lg p-2 flex items-center space-x-2 border border-gray-200" id="timer-box-intro">
                             <div class="text-center">
                                 <span class="block text-xs text-gray-500 font-bold uppercase">Süre</span>
-                                <span id="timer-display-intro" class="text-xl font-mono font-bold text-primary">08:00</span>
+                                <span id="timer-display-intro" class="text-xl font-mono font-bold text-primary">05:00</span>
                             </div>
                             <div class="flex flex-col space-y-1">
                                 <div class="flex space-x-1">
@@ -315,7 +315,7 @@
                     <!-- The Bowl -->
                     <div class="w-full md:w-1/3 flex flex-col items-center">
                         <div class="relative cursor-pointer transform transition duration-300 hover:scale-105 group" onclick="drawScenario()">
-                            <img src="https://kimyaciniz.witcdn.net/amber-cam-kavanoz-100-cc-90-adet-cam-mum-kaplari-kimyaciniz-28697-77-B.jpg" alt="Senaryo Kavanozu" class="w-48 h-48 object-contain drop-shadow-md group-hover:drop-shadow-2xl transition-all duration-300 rounded-2xl">
+                            <img src="https://kimyaciniz.witcdn.net/amber-cam-kavanoz-100-cc-90-adet-cam-mum-kaplari-kimyaciniz-28697-77-B.jpg" alt="Senaryo Kavanozu" class="w-48 h-48 object-cover drop-shadow-md group-hover:drop-shadow-2xl transition-all duration-300 rounded-2xl border-4 border-amber-800">
                             <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <span class="bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg transform translate-y-6">Tıkla ve Çek!</span>
                             </div>
@@ -362,7 +362,7 @@
             <div class="bg-white rounded-2xl shadow-lg p-8 border-t-8 border-gray-800">
                 <div class="flex justify-end mb-6 border-b pb-4">
                      <div class="bg-gray-100 rounded-lg p-2 flex items-center space-x-2 border border-gray-200" id="timer-box-exit">
-                        <div class="text-center"><span class="block text-xs text-gray-500 font-bold uppercase">Süre</span><span id="timer-display-exit" class="text-xl font-mono font-bold text-gray-800">02:00</span></div>
+                        <div class="text-center"><span class="block text-xs text-gray-500 font-bold uppercase">Süre</span><span id="timer-display-exit" class="text-xl font-mono font-bold text-gray-800">05:00</span></div>
                         <div class="flex flex-col space-y-1">
                             <div class="flex space-x-1">
                                 <button onclick="adjustTimer('exit', 1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▲</button>
@@ -482,12 +482,12 @@
         };
 
         // --- TIMER LOGIC ---
-        // Seconds: Intro: 8m (480), Method: 10m (600), Practice: 20m (1200), Exit: 2m (120) -> Total: 40 mins
+        // Intro: 5m, Method: 10m, Practice: 20m, Exit: 5m -> Total 40 mins
         const timerData = {
-            'intro': { total: 480, current: 480, interval: null, running: false },    
+            'intro': { total: 300, current: 300, interval: null, running: false },    
             'method': { total: 600, current: 600, interval: null, running: false },   
             'practice': { total: 1200, current: 1200, interval: null, running: false }, 
-            'exit': { total: 120, current: 120, interval: null, running: false }      
+            'exit': { total: 300, current: 300, interval: null, running: false }      
         };
 
         function formatTime(seconds) {
