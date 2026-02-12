@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İletişim Kurma - 4N Mesajları</title>
+    <title>İletişim: 4N Mesajları Ders Planı</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <script>
@@ -18,11 +18,9 @@
                         'primary': '#6366F1', // Indigo
                         'secondary': '#F43F5E', // Rose
                         'accent': '#14B8A6', // Teal
-                        'personal': '#F59E0B', // Amber
                         'soft-blue': '#E0E7FF',
                         'soft-pink': '#FFE4E6',
                         'soft-green': '#CCFBF1',
-                        'soft-orange': '#FEF3C7',
                         'note-yellow': '#FEF3C7',
                         'note-text': '#92400E',
                     }
@@ -71,12 +69,6 @@
         .timer-finished {
             animation: pulse-red 1s infinite;
         }
-        .handwriting-input {
-            font-family: 'Merriweather', serif;
-            color: #4b5563;
-            border-bottom: 2px dashed #d1d5db;
-            padding-bottom: 4px;
-        }
     </style>
 </head>
 <body class="text-gray-800 min-h-screen flex flex-col">
@@ -92,7 +84,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold text-gray-800">İletişim: 4N Mesajları</h1>
-                    <p class="text-xs text-gray-500">Süre: 40 Dakika</p>
+                    <p class="text-xs text-gray-500">Süre: Toplam 40 Dakika</p>
                 </div>
             </div>
             
@@ -119,7 +111,7 @@
                         <div class="bg-gray-100 rounded-lg p-2 flex items-center space-x-2 border border-gray-200" id="timer-box-intro">
                             <div class="text-center">
                                 <span class="block text-xs text-gray-500 font-bold uppercase">Süre</span>
-                                <span id="timer-display-intro" class="text-xl font-mono font-bold text-primary">05:00</span>
+                                <span id="timer-display-intro" class="text-xl font-mono font-bold text-primary">08:00</span>
                             </div>
                             <div class="flex flex-col space-y-1">
                                 <div class="flex space-x-1">
@@ -146,12 +138,12 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                    <div class="bg-red-50 p-6 rounded-xl border border-red-200 text-center flex flex-col items-center">
+                    <div class="bg-red-50 p-6 rounded-xl border border-red-200 text-center flex flex-col items-center shadow-sm">
                         <div class="text-6xl mb-4">😤</div>
                         <h3 class="text-xl font-bold text-red-700 mb-2">Saldırgan Tutum</h3>
                         <p class="text-red-900 text-sm">Bağırarak, suçlayarak veya karşı tarafı inciterek kendini ifade etme eğilimi.</p>
                     </div>
-                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 text-center flex flex-col items-center">
+                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 text-center flex flex-col items-center shadow-sm">
                         <div class="text-6xl mb-4">🤐</div>
                         <h3 class="text-xl font-bold text-blue-700 mb-2">Savunmacı Tutum</h3>
                         <p class="text-blue-900 text-sm">Kendini kapatma, konuşmaktan kaçınma veya sürekli mazeret üretme eğilimi.</p>
@@ -224,10 +216,10 @@
                 <!-- Story Box -->
                 <div class="bg-teal-50 rounded-xl p-6 border border-teal-100 mb-8 shadow-sm">
                     <h3 class="font-bold text-teal-800 mb-3 flex items-center"><span class="text-2xl mr-2">📖</span> Örnek Olay: Orkestra Arkadaşım</h3>
-                    <p class="text-gray-700 text-md leading-relaxed italic border-l-4 border-teal-300 pl-4 mb-4">
+                    <p class="text-gray-700 text-md leading-relaxed italic border-l-4 border-teal-300 pl-4 mb-4 bg-white p-3 rounded shadow-sm">
                         "Liseye ilk başladığımda utangaçtım. En iyi arkadaşımla her gün buluşurduk. Sonra o okul orkestrasına girdi ve yeni bir gruba dahil oldu. Onu her aradığımda meşguldü. İncinmiştim ve kızgındım. Bir gün telefonuma cevap verdiğinde ona bağırdım ve <strong>'Herkesten iyi olduğunu düşünüyorsun, onlar senin gerçek arkadaşın değil!'</strong> dedim."
                     </p>
-                    <ul class="list-disc list-inside text-sm text-teal-900 font-medium">
+                    <ul class="list-disc list-inside text-sm text-teal-900 font-medium space-y-1">
                         <li>Nasıl bir cevap bekliyordum? Arkadaşımın hemen verdiği cevap neydi?</li>
                         <li>Sizce gerçekten ne anlatmaya çalışıyordum?</li>
                     </ul>
@@ -238,7 +230,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- NE -->
                     <div class="step-card bg-white border-2 border-blue-200 p-6 rounded-xl relative">
-                        <div class="absolute -top-3 -left-3 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">1</div>
+                        <div class="absolute -top-3 -left-3 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow">1</div>
                         <h4 class="text-xl font-bold text-blue-700 mb-2">NE?</h4>
                         <p class="text-gray-600 text-sm mb-3">Duygunun adı. Hissediyorum...</p>
                         <div class="bg-gray-50 p-3 rounded text-sm italic text-gray-700 border-l-2 border-blue-400">
@@ -248,7 +240,7 @@
 
                     <!-- NE ZAMAN -->
                     <div class="step-card bg-white border-2 border-purple-200 p-6 rounded-xl relative">
-                        <div class="absolute -top-3 -left-3 bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">2</div>
+                        <div class="absolute -top-3 -left-3 bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow">2</div>
                         <h4 class="text-xl font-bold text-purple-700 mb-2">NE ZAMAN?</h4>
                         <p class="text-gray-600 text-sm mb-3">Hangi davranış sizi rahatsız ediyor? Sen ... yapınca</p>
                         <div class="bg-gray-50 p-3 rounded text-sm italic text-gray-700 border-l-2 border-purple-400">
@@ -258,7 +250,7 @@
 
                     <!-- NEDEN -->
                     <div class="step-card bg-white border-2 border-rose-200 p-6 rounded-xl relative">
-                        <div class="absolute -top-3 -left-3 bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">3</div>
+                        <div class="absolute -top-3 -left-3 bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow">3</div>
                         <h4 class="text-xl font-bold text-rose-700 mb-2">NEDEN?</h4>
                         <p class="text-gray-600 text-sm mb-3">Neden böyle hissettiğinizi açıklayın. Çünkü ...</p>
                         <div class="bg-gray-50 p-3 rounded text-sm italic text-gray-700 border-l-2 border-rose-400">
@@ -268,7 +260,7 @@
 
                     <!-- NASIL -->
                     <div class="step-card bg-white border-2 border-amber-200 p-6 rounded-xl relative">
-                        <div class="absolute -top-3 -left-3 bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">4</div>
+                        <div class="absolute -top-3 -left-3 bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow">4</div>
                         <h4 class="text-xl font-bold text-amber-700 mb-2">NASIL? <span class="text-xs font-normal text-gray-500">(Opsiyonel)</span></h4>
                         <p class="text-gray-600 text-sm mb-3">Onun nasıl davranmasını isterdiniz?</p>
                         <div class="bg-gray-50 p-3 rounded text-sm italic text-gray-700 border-l-2 border-amber-400">
@@ -362,7 +354,7 @@
             <div class="bg-white rounded-2xl shadow-lg p-8 border-t-8 border-gray-800">
                 <div class="flex justify-end mb-6 border-b pb-4">
                      <div class="bg-gray-100 rounded-lg p-2 flex items-center space-x-2 border border-gray-200" id="timer-box-exit">
-                        <div class="text-center"><span class="block text-xs text-gray-500 font-bold uppercase">Süre</span><span id="timer-display-exit" class="text-xl font-mono font-bold text-gray-800">05:00</span></div>
+                        <div class="text-center"><span class="block text-xs text-gray-500 font-bold uppercase">Süre</span><span id="timer-display-exit" class="text-xl font-mono font-bold text-gray-800">02:00</span></div>
                         <div class="flex flex-col space-y-1">
                             <div class="flex space-x-1">
                                 <button onclick="adjustTimer('exit', 1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▲</button>
@@ -456,7 +448,7 @@
         const scenarios = [
             "Bu projede arkadaşımın da benimle birlikte çalışması gerekiyordu ama sonuçta her şeyi ben yaptım!",
             "Kardeşim iznim olmadan en sevdiğim tişörtümü giydi ve üzerine leke yaptı.",
-            "Arkadaşım başkalarının yanında benimle alay etti, sonrasında sadece şaka yaptığını söyledi.",
+            "Sınıf arkadaşım başkalarının yanında benimle alay etti, sonrasında sadece şaka yaptığını söyledi.",
             "Annem/Babam odamı toplamadığım için bana bağırdı ama o sırada çok önemli bir ödev yetiştirmeye çalışıyordum.",
             "Arkadaşım sözleştiğimiz saatte buluşma yerine gelmedi ve beni haber vermeden 1 saat bekletti."
         ];
@@ -482,12 +474,12 @@
         };
 
         // --- TIMER LOGIC ---
-        // Intro: 5m, Method: 10m, Practice: 20m, Exit: 5m -> Total 40 mins
+        // Intro: 8m, Method: 10m, Practice: 20m, Exit: 2m -> Total 40 mins
         const timerData = {
-            'intro': { total: 300, current: 300, interval: null, running: false },    
+            'intro': { total: 480, current: 480, interval: null, running: false },    
             'method': { total: 600, current: 600, interval: null, running: false },   
             'practice': { total: 1200, current: 1200, interval: null, running: false }, 
-            'exit': { total: 300, current: 300, interval: null, running: false }      
+            'exit': { total: 120, current: 120, interval: null, running: false }      
         };
 
         function formatTime(seconds) {
