@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim Kurma - 4N Mesajları</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        'primary': '#6366F1', // Indigo
+                        'secondary': '#F43F5E', // Rose
+                        'accent': '#14B8A6', // Teal
+                        'personal': '#F59E0B', // Amber
+                        'soft-blue': '#E0E7FF',
+                        'soft-pink': '#FFE4E6',
+                        'soft-green': '#CCFBF1',
+                        'soft-orange': '#FEF3C7',
+                        'note-yellow': '#FEF3C7',
+                        'note-text': '#92400E',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .step-card {
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .hidden-section {
+            display: none;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal-content {
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .reveal-content.show {
+            max-height: 800px;
+            opacity: 1;
+        }
+        @keyframes pulse-red {
+            0% { background-color: #fee2e2; }
+            50% { background-color: #ef4444; color: white; }
+            100% { background-color: #fee2e2; }
+        }
+        .timer-finished {
+            animation: pulse-red 1s infinite;
+        }
+        .handwriting-input {
+            font-family: 'Merriweather', serif;
+            color: #4b5563;
+            border-bottom: 2px dashed #d1d5db;
+            padding-bottom: 4px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-primary text-white p-2 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">İletişim: 4N Mesajları</h1>
+                    <p class="text-xs text-gray-500">Süre: 40 Dakika</p>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <div class="hidden md:flex space-x-1 bg-gray-100 p-1 rounded-full overflow-x-auto">
+                <button onclick="showSection('intro')" id="nav-intro" class="px-4 py-1 rounded-full text-xs font-medium bg-white shadow text-primary transition whitespace-nowrap">1. Keşfetme</button>
+                <button onclick="showSection('method')" id="nav-method" class="px-4 py-1 rounded-full text-xs font-medium text-gray-500 hover:text-primary transition whitespace-nowrap">2. 4N Metodu</button>
+                <button onclick="showSection('practice')" id="nav-practice" class="px-4 py-1 rounded-full text-xs font-medium text-gray-500 hover:text-primary transition whitespace-nowrap">3. Grup Alıştırması</button>
+                <button onclick="showSection('exit')" id="nav-exit" class="px-4 py-1 rounded-full text-xs font-medium text-gray-500 hover:text-primary transition whitespace-nowrap">4. Kapanış</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 relative">
+
+        <!-- SECTION 1: KEŞFETME -->
+        <section id="section-intro" class="fade-in">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-8 border-primary relative overflow-hidden mb-8">
+                
+                <!-- Timer & Code -->
+                <div class="flex justify-between items-start mb-6 border-b pb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-gray-100 rounded-lg p-2 flex items-center space-x-2 border border-gray-200" id="timer-box-intro">
+                            <div class="text-center">
+                                <span class="block text-xs text-gray-500 font-bold uppercase">Süre</span>
+                                <span id="timer-display-intro" class="text-xl font-mono font-bold text-primary">08:00</span>
+                            </div>
+                            <div class="flex flex-col space-y-1">
+                                <div class="flex space-x-1">
+                                    <button onclick="adjustTimer('intro', 1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▲</button>
+                                    <button onclick="adjustTimer('intro', -1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▼</button>
+                                </div>
+                                <button onclick="toggleTimer('intro')" id="timer-btn-intro" class="bg-primary text-white px-2 py-0.5 rounded text-xs hover:bg-indigo-700 transition">Başlat</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <span class="bg-soft-blue text-primary px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase inline-block mb-1">Bölüm 1: Keşfetme</span>
+                        <div class="hidden md:block bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-sm font-bold border border-gray-200 shadow-sm inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            Öğrenci Sayfa Kodu: 3.2.1
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-900">Saldırgan mı? Savunmacı mı?</h2>
+                    <p class="text-gray-600 mt-2 text-lg">Düşüncelerimiz ve duygularımız çoğunlukla davranışlarımızı etkiler. İnsanlar iletişim kurarken farklı tutumlar sergileyebilirler.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                    <div class="bg-red-50 p-6 rounded-xl border border-red-200 text-center flex flex-col items-center">
+                        <div class="text-6xl mb-4">😤</div>
+                        <h3 class="text-xl font-bold text-red-700 mb-2">Saldırgan Tutum</h3>
+                        <p class="text-red-900 text-sm">Bağırarak, suçlayarak veya karşı tarafı inciterek kendini ifade etme eğilimi.</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 text-center flex flex-col items-center">
+                        <div class="text-6xl mb-4">🤐</div>
+                        <h3 class="text-xl font-bold text-blue-700 mb-2">Savunmacı Tutum</h3>
+                        <p class="text-blue-900 text-sm">Kendini kapatma, konuşmaktan kaçınma veya sürekli mazeret üretme eğilimi.</p>
+                    </div>
+                </div>
+
+                <!-- Discussion Guide -->
+                <div class="mt-8 bg-note-yellow border border-yellow-200 rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-6 h-6 text-note-text mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                        <h3 class="text-lg font-bold text-note-text">Sınıf Tartışma Rehberi</h3>
+                    </div>
+                    <ul class="list-disc list-outside ml-6 space-y-3 text-gray-800">
+                        <li><span class="font-semibold text-red-600">SORU:</span> Resimdeki (veya aklınızdaki) insanlar savunmacı mı saldırgan mı davranıyor?</li>
+                        <li><span class="font-semibold text-red-600">SORU:</span> Sizce insanlar duygularını ve ihtiyaçlarını net bir şekilde ifade etmek yerine neden saldırgan veya savunmacı olurlar?</li>
+                    </ul>
+                </div>
+
+                <!-- Hidden Conclusion Message -->
+                <div class="mt-8 border-t pt-6 flex flex-col items-center">
+                    <button onclick="toggleContent('intro-conclusion', this)" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-full shadow transition flex items-center space-x-2">
+                        <span>👁️</span><span>Öğretmen Notunu Göster</span>
+                    </button>
+                    <div id="intro-conclusion" class="reveal-content mt-4 w-full">
+                        <div class="bg-indigo-50 rounded-xl p-6 border border-indigo-200 text-center">
+                            <p class="text-indigo-900 text-lg leading-relaxed font-medium">
+                                "Duyguları ifade etmek zor olabilir. Zira hepimizin başkalarının duygularını incitme, kendi duygularımızın incinmesi, arkadaşlarımızı kaybetmek veya doğabilecek diğer sonuçlar gibi korkularımız vardır. Bunu kabul etmeliyiz."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button onclick="showSection('method')" class="bg-primary text-white px-6 py-3 rounded-lg shadow hover:bg-indigo-700 transition flex items-center">Sonraki Adım <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: YÖNTEM ÖĞRENİMİ (4N) -->
+        <section id="section-method" class="hidden-section fade-in">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-8 border-accent relative overflow-hidden mb-8">
+                
+                <!-- Timer & Code -->
+                <div class="flex justify-between items-start mb-6 border-b pb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-gray-100 rounded-lg p-2 flex items-center space-x-2 border border-gray-200" id="timer-box-method">
+                            <div class="text-center"><span class="block text-xs text-gray-500 font-bold uppercase">Süre</span><span id="timer-display-method" class="text-xl font-mono font-bold text-accent">10:00</span></div>
+                            <div class="flex flex-col space-y-1">
+                                <div class="flex space-x-1">
+                                    <button onclick="adjustTimer('method', 1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▲</button>
+                                    <button onclick="adjustTimer('method', -1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▼</button>
+                                </div>
+                                <button onclick="toggleTimer('method')" id="timer-btn-method" class="bg-accent text-white px-2 py-0.5 rounded text-xs hover:bg-teal-600 transition">Başlat</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="bg-soft-green text-accent px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase inline-block mb-1">Bölüm 2: İlişkilendirme</span>
+                        <div class="hidden md:block bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-sm font-bold border border-gray-200 shadow-sm inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            Öğrenci Sayfa Kodu: 3.2.2
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 italic">"Ne söylediğiniz değil, nasıl söylediğiniz önemlidir."</h2>
+                </div>
+                
+                <!-- Story Box -->
+                <div class="bg-teal-50 rounded-xl p-6 border border-teal-100 mb-8 shadow-sm">
+                    <h3 class="font-bold text-teal-800 mb-3 flex items-center"><span class="text-2xl mr-2">📖</span> Örnek Olay: Orkestra Arkadaşım</h3>
+                    <p class="text-gray-700 text-md leading-relaxed italic border-l-4 border-teal-300 pl-4 mb-4">
+                        "Liseye ilk başladığımda utangaçtım. En iyi arkadaşımla her gün buluşurduk. Sonra o okul orkestrasına girdi ve yeni bir gruba dahil oldu. Onu her aradığımda meşguldü. İncinmiştim ve kızgındım. Bir gün telefonuma cevap verdiğinde ona bağırdım ve <strong>'Herkesten iyi olduğunu düşünüyorsun, onlar senin gerçek arkadaşın değil!'</strong> dedim."
+                    </p>
+                    <ul class="list-disc list-inside text-sm text-teal-900 font-medium">
+                        <li>Nasıl bir cevap bekliyordum? Arkadaşımın hemen verdiği cevap neydi?</li>
+                        <li>Sizce gerçekten ne anlatmaya çalışıyordum?</li>
+                    </ul>
+                </div>
+
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">4N Mesajları (Sen Dili Yerine Ben Dili)</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- NE -->
+                    <div class="step-card bg-white border-2 border-blue-200 p-6 rounded-xl relative">
+                        <div class="absolute -top-3 -left-3 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">1</div>
+                        <h4 class="text-xl font-bold text-blue-700 mb-2">NE?</h4>
+                        <p class="text-gray-600 text-sm mb-3">Duygunun adı. Hissediyorum...</p>
+                        <div class="bg-gray-50 p-3 rounded text-sm italic text-gray-700 border-l-2 border-blue-400">
+                            "Kendimi terk edilmiş, yalnız, kızgın ve hayal kırıklığına uğramış <strong>hissettim.</strong>"
+                        </div>
+                    </div>
+
+                    <!-- NE ZAMAN -->
+                    <div class="step-card bg-white border-2 border-purple-200 p-6 rounded-xl relative">
+                        <div class="absolute -top-3 -left-3 bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">2</div>
+                        <h4 class="text-xl font-bold text-purple-700 mb-2">NE ZAMAN?</h4>
+                        <p class="text-gray-600 text-sm mb-3">Hangi davranış sizi rahatsız ediyor? Sen ... yapınca</p>
+                        <div class="bg-gray-50 p-3 rounded text-sm italic text-gray-700 border-l-2 border-purple-400">
+                            "Telefonlarıma cevap vermediğinde ve yeni arkadaşlarınla vakit <strong>geçirdiğinde...</strong>"
+                        </div>
+                    </div>
+
+                    <!-- NEDEN -->
+                    <div class="step-card bg-white border-2 border-rose-200 p-6 rounded-xl relative">
+                        <div class="absolute -top-3 -left-3 bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">3</div>
+                        <h4 class="text-xl font-bold text-rose-700 mb-2">NEDEN?</h4>
+                        <p class="text-gray-600 text-sm mb-3">Neden böyle hissettiğinizi açıklayın. Çünkü ...</p>
+                        <div class="bg-gray-50 p-3 rounded text-sm italic text-gray-700 border-l-2 border-rose-400">
+                            "<strong>Çünkü</strong> sohbet edecek birini özledim. Arkadaşımı özledim."
+                        </div>
+                    </div>
+
+                    <!-- NASIL -->
+                    <div class="step-card bg-white border-2 border-amber-200 p-6 rounded-xl relative">
+                        <div class="absolute -top-3 -left-3 bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">4</div>
+                        <h4 class="text-xl font-bold text-amber-700 mb-2">NASIL? <span class="text-xs font-normal text-gray-500">(Opsiyonel)</span></h4>
+                        <p class="text-gray-600 text-sm mb-3">Onun nasıl davranmasını isterdiniz?</p>
+                        <div class="bg-gray-50 p-3 rounded text-sm italic text-gray-700 border-l-2 border-amber-400">
+                            "Birlikte bir şeyler yapabilmek için zaman yaratmanı <strong>istiyorum.</strong>"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="showSection('intro')" class="text-gray-500 hover:text-gray-800 font-medium px-4 py-2">← Geri Dön</button>
+                    <button onclick="showSection('practice')" class="bg-accent text-white px-6 py-3 rounded-lg shadow hover:bg-teal-600 transition flex items-center">Grup Çalışmasına Geç <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: GRUP ALIŞTIRMASI -->
+        <section id="section-practice" class="hidden-section fade-in">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-l-8 border-secondary relative overflow-hidden mb-8">
+                
+                <!-- Timer & Header -->
+                <div class="flex justify-between items-start mb-6 border-b pb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-gray-100 rounded-lg p-2 flex items-center space-x-2 border border-gray-200" id="timer-box-practice">
+                            <div class="text-center"><span class="block text-xs text-gray-500 font-bold uppercase">Süre</span><span id="timer-display-practice" class="text-xl font-mono font-bold text-secondary">20:00</span></div>
+                            <div class="flex flex-col space-y-1">
+                                <div class="flex space-x-1">
+                                    <button onclick="adjustTimer('practice', 1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▲</button>
+                                    <button onclick="adjustTimer('practice', -1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▼</button>
+                                </div>
+                                <button onclick="toggleTimer('practice')" id="timer-btn-practice" class="bg-secondary text-white px-2 py-0.5 rounded text-xs hover:bg-rose-600 transition">Başlat</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="bg-soft-pink text-secondary px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase inline-block mb-1">Bölüm 3: Alıştırma</span>
+                    </div>
+                </div>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">4N Mesajları Oluşturma</h2>
+                <p class="text-gray-600 text-lg mb-8">Sınıfı küçük gruplara ayırın. "Kavanozdan Çek" butonuna basarak rastgele bir senaryo alın ve bu senaryoya uygun bir 4N mesajı yazıp sınıfla paylaşın.</p>
+
+                <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                    
+                    <!-- The Bowl -->
+                    <div class="w-full md:w-1/3 flex flex-col items-center">
+                        <div class="relative cursor-pointer transform transition duration-300 hover:scale-105 group" onclick="drawScenario()">
+                            <img src="https://kimyaciniz.witcdn.net/amber-cam-kavanoz-100-cc-90-adet-cam-mum-kaplari-kimyaciniz-28697-77-B.jpg" alt="Senaryo Kavanozu" class="w-48 h-48 object-contain drop-shadow-md group-hover:drop-shadow-2xl transition-all duration-300 rounded-2xl">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <span class="bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg transform translate-y-6">Tıkla ve Çek!</span>
+                            </div>
+                        </div>
+                        <button onclick="drawScenario()" class="mt-6 bg-secondary text-white px-6 py-2 rounded-full shadow hover:bg-rose-600 transition font-bold">Yeni Çekiliş</button>
+                    </div>
+
+                    <!-- The Output -->
+                    <div class="w-full md:w-2/3">
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-8 h-full min-h-[250px] shadow-sm relative">
+                            
+                            <div id="scenario-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                                <svg class="w-12 h-12 mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                <p>Senaryo çekmek için kavanoza tıklayın.</p>
+                            </div>
+
+                            <div id="scenario-content" class="hidden fade-in">
+                                <span class="bg-rose-100 text-rose-800 text-xs font-bold px-2 py-1 rounded mb-3 inline-block">Çekilen Senaryo</span>
+                                <p id="scenario-text" class="text-xl text-gray-800 font-serif leading-relaxed mb-6 border-l-4 border-rose-400 pl-4"></p>
+                                
+                                <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                                    <h4 class="font-bold text-gray-700 text-sm mb-2">Bu durum için grupça mesajınızı yazın:</h4>
+                                    <ul class="text-sm space-y-2 text-gray-600">
+                                        <li><strong>NE:</strong> "Kendimi ............. hissettim."</li>
+                                        <li><strong>NE ZAMAN:</strong> "Sen ............. yapınca."</li>
+                                        <li><strong>NEDEN:</strong> "Çünkü ................"</li>
+                                        <li><strong>NASIL:</strong> "Bundan sonra ............. istiyorum."</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 flex justify-between">
+                    <button onclick="showSection('method')" class="text-gray-500 hover:text-gray-800 font-medium px-4 py-2">← Metoda Dön</button>
+                    <button onclick="showSection('exit')" class="bg-gray-800 text-white px-6 py-3 rounded-lg shadow hover:bg-black transition flex items-center">Dersi Bitir & Çıkış Kartı <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: KAPANIŞ VE DEĞERLENDİRME -->
+        <section id="section-exit" class="hidden-section fade-in">
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-t-8 border-gray-800">
+                <div class="flex justify-end mb-6 border-b pb-4">
+                     <div class="bg-gray-100 rounded-lg p-2 flex items-center space-x-2 border border-gray-200" id="timer-box-exit">
+                        <div class="text-center"><span class="block text-xs text-gray-500 font-bold uppercase">Süre</span><span id="timer-display-exit" class="text-xl font-mono font-bold text-gray-800">02:00</span></div>
+                        <div class="flex flex-col space-y-1">
+                            <div class="flex space-x-1">
+                                <button onclick="adjustTimer('exit', 1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▲</button>
+                                <button onclick="adjustTimer('exit', -1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-1 rounded text-xs">▼</button>
+                            </div>
+                            <button onclick="toggleTimer('exit')" id="timer-btn-exit" class="bg-gray-800 text-white px-2 py-0.5 rounded text-xs hover:bg-black transition">Başlat</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-900">Çıkış Kartı</h2>
+                    <p class="text-gray-600 mt-2">Dersi bitirmeden önce aşağıdaki soruları düşünün ve sözlü olarak cevaplayın.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Q1 -->
+                    <div class="bg-blue-50 rounded-xl p-6 text-center transform hover:scale-105 transition duration-300 border border-blue-100">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 shadow-lg">1</div>
+                        <h3 class="text-xl font-bold text-blue-900 mb-2">NE?</h3>
+                        <p class="text-gray-600">Bugün öğrendiğimiz "4N (Ne, Ne Zaman, Neden, Nasıl)" metodunun amacı nedir?</p>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="bg-purple-50 rounded-xl p-6 text-center transform hover:scale-105 transition duration-300 border border-purple-100">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 shadow-lg">2</div>
+                        <h3 class="text-xl font-bold text-purple-900 mb-2">NE OLDU?</h3>
+                        <p class="text-gray-600">Kendi cümlelerinizi yazarken bu dört aşamadan en çok hangisinde zorlandınız? Neden?</p>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="bg-green-50 rounded-xl p-6 text-center transform hover:scale-105 transition duration-300 border border-green-100">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 shadow-lg">3</div>
+                        <h3 class="text-xl font-bold text-green-900 mb-2">ŞİMDİ NE OLACAK?</h3>
+                        <p class="text-gray-600">Bu metodu arkadaşlarınızla veya ailenizle yaşadığınız bir anlaşmazlıkta nasıl kullanacaksınız?</p>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center">
+                    <button onclick="location.reload()" class="text-gray-500 hover:text-gray-800 underline text-sm">Sunumu Başa Sar</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t mt-auto">
+        <div class="container mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+            <p>&copy; 2024 İletişim Becerileri Ders Modülü</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- GLOBAL FUNCTION DEFINITIONS ---
+
+        window.showSection = function(sectionId) {
+            document.querySelectorAll('section').forEach(sec => {
+                sec.classList.add('hidden-section');
+            });
+            const targetSection = document.getElementById('section-' + sectionId);
+            if(targetSection) {
+                targetSection.classList.remove('hidden-section');
+            }
+            document.querySelectorAll('header button').forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow', 'text-primary');
+                btn.classList.add('text-gray-500');
+            });
+            const activeBtn = document.getElementById('nav-' + sectionId);
+            if(activeBtn) {
+                activeBtn.classList.remove('text-gray-500');
+                activeBtn.classList.add('bg-white', 'shadow', 'text-primary');
+            }
+            window.scrollTo(0, 0);
+        };
+
+        window.toggleEmotion = function(btn) {
+            btn.classList.toggle('active');
+            btn.classList.toggle('bg-soft-blue');
+            btn.classList.toggle('border-primary');
+        };
+
+        window.toggleContent = function(id, btn) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('show')) {
+                el.classList.remove('show');
+                btn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+            } else {
+                el.classList.add('show');
+            }
+        };
+
+        // Random Scenario Drawer
+        const scenarios = [
+            "Bu projede arkadaşımın da benimle birlikte çalışması gerekiyordu ama sonuçta her şeyi ben yaptım!",
+            "Kardeşim iznim olmadan en sevdiğim tişörtümü giydi ve üzerine leke yaptı.",
+            "Arkadaşım başkalarının yanında benimle alay etti, sonrasında sadece şaka yaptığını söyledi.",
+            "Annem/Babam odamı toplamadığım için bana bağırdı ama o sırada çok önemli bir ödev yetiştirmeye çalışıyordum.",
+            "Arkadaşım sözleştiğimiz saatte buluşma yerine gelmedi ve beni haber vermeden 1 saat bekletti."
+        ];
+
+        window.drawScenario = function() {
+            // Hide placeholder, show content
+            document.getElementById('scenario-placeholder').classList.add('hidden');
+            const contentDiv = document.getElementById('scenario-content');
+            
+            // Remove animation class to re-trigger it
+            contentDiv.classList.remove('fade-in');
+            
+            // Force reflow
+            void contentDiv.offsetWidth;
+            
+            // Pick random scenario
+            const randomIndex = Math.floor(Math.random() * scenarios.length);
+            document.getElementById('scenario-text').innerText = `"${scenarios[randomIndex]}"`;
+            
+            // Show and animate
+            contentDiv.classList.remove('hidden');
+            contentDiv.classList.add('fade-in');
+        };
+
+        // --- TIMER LOGIC ---
+        // Seconds: Intro: 8m (480), Method: 10m (600), Practice: 20m (1200), Exit: 2m (120) -> Total: 40 mins
+        const timerData = {
+            'intro': { total: 480, current: 480, interval: null, running: false },    
+            'method': { total: 600, current: 600, interval: null, running: false },   
+            'practice': { total: 1200, current: 1200, interval: null, running: false }, 
+            'exit': { total: 120, current: 120, interval: null, running: false }      
+        };
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function updateDisplay(id) {
+            const display = document.getElementById(`timer-display-${id}`);
+            const box = document.getElementById(`timer-box-${id}`);
+            if (display) {
+                display.innerText = formatTime(timerData[id].current);
+                if (timerData[id].current === 0) {
+                    box.classList.add('timer-finished');
+                } else {
+                    box.classList.remove('timer-finished');
+                }
+            }
+        }
+
+        window.adjustTimer = function(id, minutes) {
+            if (timerData[id].running) return;
+            const newTime = timerData[id].current + (minutes * 60);
+            if (newTime >= 0) {
+                timerData[id].current = newTime;
+                timerData[id].total = newTime;
+                updateDisplay(id);
+            }
+        };
+
+        window.toggleTimer = function(id) {
+            const btn = document.getElementById(`timer-btn-${id}`);
+            if (!timerData[id].running) {
+                timerData[id].running = true;
+                btn.innerText = "Durdur";
+                btn.classList.add("bg-red-500", "hover:bg-red-600");
+                timerData[id].interval = setInterval(() => {
+                    if (timerData[id].current > 0) {
+                        timerData[id].current--;
+                        updateDisplay(id);
+                    } else {
+                        clearInterval(timerData[id].interval);
+                        timerData[id].running = false;
+                        btn.innerText = "Bitti";
+                        updateDisplay(id);
+                    }
+                }, 1000);
+            } else {
+                clearInterval(timerData[id].interval);
+                timerData[id].running = false;
+                btn.innerText = "Devam Et";
+                btn.classList.remove("bg-red-500", "hover:bg-red-600");
+            }
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            window.showSection('intro');
+            Object.keys(timerData).forEach(key => updateDisplay(key));
+        });
+
+    </script>
+</body>
+</html>
